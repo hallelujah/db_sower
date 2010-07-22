@@ -5,9 +5,9 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "db_sower"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "hery@rails-royce.Org"
+    gem.summary = %Q{A database sower with a nice DSL}
+    gem.description = %Q{On large database project, when you have too many data it can be useful to fetch a small part of your data. Describe your database with a nice dsl, filters some data and fetch them}
+    gem.email = "hery@rails-royce.org"
     gem.homepage = "http://github.com/hallelujah/db_sower"
     gem.authors = ["hallelujah"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
