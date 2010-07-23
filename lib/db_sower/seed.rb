@@ -1,4 +1,5 @@
 require 'tsort'
+require 'db_sower/dependency'
 
 module DbSower
   class Seed
