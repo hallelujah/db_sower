@@ -13,17 +13,18 @@ class TestDbSower < Test::Unit::TestCase
 
     spacer = " " * 10
     seed.tsort_each_node do |dep|
-      puts '-' * 40
-      puts "Querying [#{dep.name}] with options #{dep.options.inspect}"
-      puts
-      puts dep.sql
-      seed.tsort_each_child(dep) do |child|
-        puts spacer+('-' * 30)
-        puts spacer + "Querying [#{child.name}] with options #{child.options.inspect}"
-        puts
-        puts spacer + child.sql
 
+      seed.tsort_each_child(dep) do |child|
+        puts ('-' * 40)
+        puts "Querying [#{child.name}] with options #{child.options.inspect}"
+        puts
+        puts child.conditions.inspect
       end
+
+      puts spacer + ('-' * 30)
+      puts spacer + "Querying [#{dep.name}] with options #{dep.options.inspect}"
+      puts
+      puts spacer + dep.conditions.inspect
 
     end
     # 3 tables are declared :creations, :achats and masques
