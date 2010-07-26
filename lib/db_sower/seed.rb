@@ -24,6 +24,14 @@ module DbSower
       edges.values.map(&:keys).flatten.size
     end
 
+    def tables
+      tables = []
+      nodes.each_value do |node|
+        tables << node.table_name
+      end
+      tables.uniq
+    end
+
     def edge(from,to)
       @edges[from][to] ||= DbSower::Edge.new(from,to)
     end

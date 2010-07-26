@@ -17,9 +17,8 @@ class DbSower::TestSeed < Test::Unit::TestCase
   end
 
   def test_graft
-    puts @seed.tsort.flatten
     # We declared 6 tables : creations, achats, masques, campagnes, users, roles
-    #assert_equal 6, @seed.tables
+    assert_equal 6, @seed.tables.size
 
     # We declared 6 nodes : creations, achats, masques, campagnes, annonceurs, campagnes, roles
     assert_equal 7, @seed.nodes.size
