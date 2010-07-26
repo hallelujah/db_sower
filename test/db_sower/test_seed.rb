@@ -8,10 +8,10 @@ class DbSower::TestSeed < Test::Unit::TestCase
       creations.with(:achats).where(:achat_id => :id)
       # masques depends on creations
       masques.with(:creations).where(:id => :masque_id)
-      achats.with(:campagnes).where(:campagne_id => :id)
-      annonceurs(:database => :aimfar_prod, :table => :users).with(:roles, :name => 'annonceur').where(:role_id => :id)
+      achats.where(:status => [-1,1]).with(:campagnes).where(:campagne_id => :id)
+      annonceurs(:database => :aimfar_prod, :table => :users).with(:roles).where(:role_id => :id, :"roles.name" => 'annonceur')
       campagnes.with(:annonceurs).where(:annonceur_id => :id)
-      agences(:database => :aimfar_prod, :table => :users).with(:roles, :name => 'agence').where(:role_id => :id)
+      agences(:database => :aimfar_prod, :table => :users).with(:roles).where(:role_id => :id, :"roles.name" => 'agence')
       annonceurs.with(:agences).where(:annonceur_id => :id)
     end
   end
@@ -32,13 +32,15 @@ class DbSower::TestSeed < Test::Unit::TestCase
     # annonceurs -> roles
     # agences -> roles
     assert_equal 7, @seed.edges_size
+    # The order that allow to fetch all the tables
     assert_equal ['roles','agences','annonceurs','campagnes','achats','creations','masques'], @seed.tsort.flatten.map(&:node_alias)
   end
 
 
   def test_edges
-    @seed.each_strongly_connected_component_from(DbSower::Node.new(@seed,:creations)) do |deps|
-  #    puts deps.map(&:table_name).inspect
+    @seed.each_strongly_connected_component_from(DbSower::Node.new(@seed,:creations)) do |nodes|
+      node = nodes.first
+      puts node.conditions.map(&:conditions)
     end
   end
 end
