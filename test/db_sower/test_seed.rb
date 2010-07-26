@@ -32,5 +32,13 @@ class DbSower::TestSeed < Test::Unit::TestCase
     # annonceurs -> roles
     # agences -> roles
     assert_equal 7, @seed.edges_size
+    assert_equal ['roles','agences','annonceurs','campagnes','achats','creations','masques'], @seed.tsort.flatten.map(&:node_alias)
+  end
+
+
+  def test_edges
+    @seed.each_strongly_connected_component_from(DbSower::Node.new(@seed,:creations)) do |deps|
+  #    puts deps.map(&:table_name).inspect
+    end
   end
 end

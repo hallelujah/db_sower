@@ -5,7 +5,7 @@ module DbSower
 
     include TSort
 
-    attr_reader :nodes, :edges
+    attr_reader :nodes, :edges, :reverse_edges
 
     def tsort_each_node(&block)
       nodes.values.each(&block)
@@ -18,6 +18,7 @@ module DbSower
     def initialize
       @nodes = Hash.new
       @edges = Hash.new{ |h,k| h[k] = Hash.new}
+      @reverse_edges = Hash.new{ |h,k| h[k] = Hash.new}
     end
 
     def edges_size
@@ -33,7 +34,10 @@ module DbSower
     end
 
     def edge(from,to)
-      @edges[from][to] ||= DbSower::Edge.new(from,to)
+      e = DbSower::Edge.new(from,to)
+      @edges[from][to] ||= e
+      @reverse_edges[to][from] ||= e
+      e
     end
 
     def node(n)
