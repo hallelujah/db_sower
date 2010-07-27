@@ -12,6 +12,14 @@ module DbSower
       def initialize(cond = {})
         @conditions = cond.clone
       end
+
+      def keys
+        @conditions.keys
+      end
+
+      def values
+        @conditions.values
+      end
     end
 
     def self.included(base)
@@ -20,8 +28,9 @@ module DbSower
       end
     end
 
-    def where(conditions={})
+    def where(conditions = {})
       @conditions << DbSower::Conditional::Condition.new(conditions)
+      self
     end
   end
 end
