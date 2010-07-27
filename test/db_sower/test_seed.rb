@@ -3,16 +3,16 @@ class DbSower::TestSeed < Test::Unit::TestCase
 
   def setup
     @seed = DbSower::Seed.new
-    @seed.graft do 
+    @seed.graft(:database => :aimfar_prod) do 
       # Creations depends on achats
       creations.with(:achats).where(:achat_id => :id)
       # masques depends on creations
       masques.with(:creations).where(:id => :masque_id)
       achats.where(:status => [-1,1]).with(:campagnes).where(:campagne_id => :id)
-      annonceurs(:database => :aimfar_prod, :table => :users).with(:roles).where(:role_id => :id, :"roles.name" => 'annonceur')
+      annonceurs(:table => :users).with(:roles).where(:role_id => :id, 'annonceur' => :name)
       campagnes.with(:annonceurs).where(:annonceur_id => :id)
-      agences(:database => :aimfar_prod, :table => :users).with(:roles).where(:role_id => :id, :"roles.name" => 'agence')
-      annonceurs.with(:agences).where(:annonceur_id => :id)
+      agences(:table => :users).with(:roles).where(:role_id => :id, 'agence' => :name)
+      campagnes.with(:agences).where(:agence_id => :id)
     end
   end
 
@@ -38,9 +38,15 @@ class DbSower::TestSeed < Test::Unit::TestCase
 
 
   def test_edges
-    @seed.each_strongly_connected_component_from(DbSower::Node.new(@seed,:creations)) do |nodes|
+    puts
+    @seed.each_strongly_connected_component do |nodes|
       node = nodes.first
-      puts node.conditions.map(&:conditions)
+      puts node.node_alias + " : " + node.table_name 
+      puts node.columns.inspect
+      node.each_edge do |from,edge|
+        puts " - " + from.node_alias + " : " + from.table_name 
+      end
     end
+    puts
   end
 end
