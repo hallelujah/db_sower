@@ -12,6 +12,17 @@ module DbSower
       @options = options.clone
     end
 
+    def columns
+      cols = []
+      each_reverse_edge do |tail,edge| 
+        cols.concat(edge.head_columns)
+      end
+      each_edge do |head,edge| 
+        cols.concat(edge.tail_columns)
+      end
+      cols.uniq
+    end
+
     def node_alias
       @node_alias ||= "#@name"
     end
@@ -30,8 +41,16 @@ module DbSower
 
     def with(node_alias, options = {})
       node = DbSower::Node.new(@seed,node_alias,options)
-      node = @seed.node(node)
-      @seed.edge(self,node)
+      n = @seed.node(node)
+      @seed.edge(self,n)
+    end
+
+    def each_edge(&block)
+      @seed.edges[self].each(&block)
+    end
+
+    def each_reverse_edge(&block)
+      @seed.reverse_edges[self].each(&block)
     end
 
     def inspect
