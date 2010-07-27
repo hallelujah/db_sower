@@ -33,10 +33,10 @@ module DbSower
       tables.uniq
     end
 
-    def edge(from,to)
-      e = DbSower::Edge.new(from,to)
-      @edges[from][to] ||= e
-      @reverse_edges[to][from] ||= e
+    def edge(tail,head)
+      e = DbSower::Edge.new(tail, head)
+      @edges[tail][head] ||= e
+      @reverse_edges[head][tail] ||= e
       e
     end
 
