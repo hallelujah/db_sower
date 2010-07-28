@@ -27,18 +27,6 @@ module DbSower
       @node_alias ||= "#@name"
     end
 
-    def ==(other)
-      node_alias == other.node_alias
-    end
-
-    def eql?(other)
-      node_alias.eql?(other.node_alias)
-    end
-
-    def hash
-      node_alias.hash
-    end
-
     def with(node_alias, options = {})
       node = DbSower::Node.new(@seed,node_alias,options)
       n = @seed.node(node)
@@ -53,6 +41,14 @@ module DbSower
       @seed.reverse_edges[self].each(&block)
     end
 
+    def file_for_column(col)
+      self.node_alias + '-' + col.to_s + '.yml'
+    end
+
+    def table_name
+      (options[:table] || name).to_s
+    end
+
     def inspect
       node_alias
     end
@@ -61,16 +57,16 @@ module DbSower
       node_alias
     end
 
-    def table_name
-      if options[:table]
-        if options[:database]
-          [options[:database],options[:table]].join('.')
-        else
-          options[:table].to_s
-        end
-      else
-        node_alias
-      end
+    def ==(other)
+      node_alias == other.node_alias
+    end
+
+    def eql?(other)
+      node_alias.eql?(other.node_alias)
+    end
+
+    def hash
+      node_alias.hash
     end
 
   end

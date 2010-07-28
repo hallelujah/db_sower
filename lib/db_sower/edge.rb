@@ -1,13 +1,13 @@
 require 'db_sower/conditional'
 module DbSower
   class Edge
-    attr_reader :from, :to
+    attr_reader :tail, :head
 
     include DbSower::Conditional
 
-    def initialize(from,to)
+    def initialize(tail,head)
       @conditions = []
-      @from, @to = from, to
+      @tail, @head = tail, head
     end
 
     def head_columns
@@ -21,5 +21,14 @@ module DbSower
      cols.reject!{|k| ! k.is_a?(Symbol) }
      cols
     end
+
+    def tail_head_columns_mapping
+      h = conditions.inject({}) do |memo,c|
+        memo.merge(c.conditions)
+      end
+      h.delete_if{ |k,v| ! (Symbol === k && Symbol === v)}
+      h
+    end
+
   end
 end

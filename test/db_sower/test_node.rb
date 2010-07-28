@@ -6,14 +6,14 @@ class DbSower::TestNode < Test::Unit::TestCase
   end
 
   def test_new
-   node = DbSower::Node.new(@seed, :achats, :database => :aimfar_prod)
+   node = DbSower::Node.new(@seed, :achats, :identifier => :aimfar_prod)
    assert_equal :achats, node.name
-   assert_equal({:database => :aimfar_prod}, node.options)
+   assert_equal({:identifier => :aimfar_prod}, node.options)
   end
 
   def test_conditions
-   node = DbSower::Node.new(@seed, :achats, :database => :aimfar_prod)
-   node.where("(client_id = :client_id AND status => :status) OR (status = 0 AND stopped_at >= '2010-06-01')")
-   assert_equal [DbSower::Conditional::Condition.new("(client_id = :client_id AND status => :status) OR (status = 0 AND stopped_at >= '2010-06-01')")], node.conditions
+   node = DbSower::Node.new(@seed, :achats, :identifier => :aimfar_prod)
+   node.where({:status => [-1,1]})
+   assert_equal [DbSower::Conditional::Condition.new({:status => [-1,1]})], node.conditions
   end
 end

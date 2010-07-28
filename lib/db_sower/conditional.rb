@@ -5,12 +5,12 @@ module DbSower
 
       attr_reader :conditions
 
-      def ==(other)
-        @conditions == other.conditions
-      end
-
       def initialize(cond = {})
         @conditions = cond.clone
+      end
+
+      def ==(other)
+        @conditions == other.conditions
       end
 
       def keys

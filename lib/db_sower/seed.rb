@@ -35,9 +35,8 @@ module DbSower
 
     def edge(tail,head)
       e = DbSower::Edge.new(tail, head)
-      @edges[tail][head] ||= e
       @reverse_edges[head][tail] ||= e
-      e
+      @edges[tail][head] ||= e
     end
 
     def node(n)
