@@ -1,0 +1,9 @@
+masque1:
+  label: Image
+  body: "~IMG~"
+  id: 1
+
+masque2:
+  label: Flash
+  body: "~SCRIPT~"
+  id: 2

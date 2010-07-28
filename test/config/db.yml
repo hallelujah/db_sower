@@ -1,0 +1,15 @@
+db1: &DB
+  host: localhost
+  socket: /var/run/mysqld/mysqld.sock
+  username: db_sower
+  password: db_sower
+  port: 3306
+  adapter: mysql
+  database: database1
+  orm: active_record
+
+db2:
+  <<: *DB
+  database: database2
+  socket: /var/run/mysqld/mysqld1.sock
+

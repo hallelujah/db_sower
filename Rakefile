@@ -39,6 +39,18 @@ end
 
 task :test => :check_dependencies
 
+namespace :test do
+  namespace :db do
+    
+    desc "prepare databases for tests"
+    task :prepare do
+      $:.unshift(File.expand_path('test',File.dirname(__FILE__)))
+      require 'migrator'
+      Migrator.migrate
+    end
+  end
+end
+
 task :default => :test
 
 require 'rake/rdoctask'
