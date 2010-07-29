@@ -14,6 +14,16 @@ module DbSower
         @model.table_name = @node.table_name
       end
 
+      # TODO must be more logically divided
+      # SEE DbSower::DumpBackend#values_at
+      def formatted_conditions(backend)
+        a = nil
+        node.each_edge do |head,edge|
+          a = merge_conditions(a,backend.values_at(edge,:head))
+        end
+        a
+      end
+
       def dump
         node.table_name
         node.columns.each do |col|
