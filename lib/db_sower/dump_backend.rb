@@ -1,17 +1,7 @@
-require 'active_support/core_ext/hash/indifferent_access'
-class Hash
-  include ActiveSupport::CoreExtensions::Hash::IndifferentAccess
-end
-class String
-  unless method_defined?(:camelize)
-    def camelize(first_letter_in_uppercase = true)
-      if first_letter_in_uppercase
-        self.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
-      else
-        self.first.downcase + camelize(self)[1..-1]
-      end
-    end
-  end
+begin
+  require 'active_support/all'
+rescue LoadError
+  require 'active_support'
 end
 module DbSower
   class DumpBackend
@@ -37,11 +27,12 @@ module DbSower
       node.options[:identifier]
     end
 
-    def dump(n)
-      a = adapter(n)
-      a.dump
+    def dump_conditions(n)
+      adapter(n).formatted_conditions(self)
     end
 
+    # TODO must be more logically divided
+    # SEE DbSower::Adapters::ActiveRecord#formatted_conditions
     def values_at(edge, tail_or_head)
       edge = seed.edge(edge.tail,edge.head)
       head = edge.head
