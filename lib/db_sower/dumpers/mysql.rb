@@ -38,7 +38,7 @@ module DbSower
           end
         end
         a << ['--result-file',dest] unless dest.nil? || dest.empty?
-        a
+        a.sort
       end
 
       def dump_options
