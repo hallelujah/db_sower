@@ -1,5 +1,5 @@
 require 'helper'
-class DbSower::TestDumpBackend < Test::Unit::TestCase
+class TestDumpBackend < Test::Unit::TestCase
   fixtures :creations, :masques
   
   def setup

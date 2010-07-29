@@ -1,5 +1,5 @@
 require 'helper'
-class DbSower::TestNode < Test::Unit::TestCase
+class TestNode < Test::Unit::TestCase
 
   def setup
     @seed = DbSower::Seed.new
