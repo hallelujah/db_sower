@@ -33,7 +33,7 @@ class TestMysqlDumper < Test::Unit::TestCase
   end
 
   def test_dump_options
-    assert_equal ["--database database1","--host localhost", "--password db_sower", "--port 3306", "--socket /var/run/mysqld/mysqld.sock", "--user db_sower", "--table creations", "--result-file filename.sql"], @dumper3.dump_options
+    assert_equal ["--database database1","--host localhost", "--password db_sower", "--port 3306", "--socket /var/run/mysqld/mysqld.sock", "--user db_sower", "--result-file filename.sql", "--table creations"], @dumper3.dump_options
 
   end
 end
