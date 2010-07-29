@@ -26,3 +26,23 @@ class ActiveRecord::Migration
     ActiveRecord::Base.establish_connection(old_spec)
   end
 end
+
+Dir.glob(File.expand_path('../model/**/*.rb',__FILE__)).each do |lib|
+  f = File.basename(lib)
+  require(f)
+end
+
+class Test::Unit::TestCase
+  include ActiveRecord::TestFixtures
+  self.fixture_path = File.expand_path("../db/fixtures",__FILE__)
+  self.use_instantiated_fixtures = false
+  self.use_transactional_fixtures = false
+  # Ugly hook ... ActiveRecord::TestFixtures calls "setup :setup_fixtures"
+  # But in test/unit >= 2.1.0 setup with no arguments will registers it with default options {:after => :append}
+  # So we need to unregister it and re-register with :before => :prepend
+  unregister_setup :setup_fixtures
+  register_setup_method :setup_fixtures, :before => :prepend
+end
+
+
+
