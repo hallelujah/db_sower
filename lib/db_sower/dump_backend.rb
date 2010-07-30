@@ -62,7 +62,8 @@ module DbSower
     end
 
     class Identifier
-      def initialize(h)
+      def initialize(options)
+        h = options.with_indifferent_access
         @database = h[:database]
         @socket = h[:socket]
         @user = h[:username]
