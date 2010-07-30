@@ -17,10 +17,15 @@ module DbSower
       # TODO must be more logically divided
       # SEE DbSower::DumpBackend#values_at
       def formatted_conditions(backend)
+        conditions = node.conditions
         a = nil
+        conditions.each do |cond|
+          a = merge_conditions(a,cond.conditions)
+        end
         # node is tail so we have to query backend values at :tail
+
         node.each_edge do |head,edge|
-          a = merge_conditions(a,backend.values_at(edge,:tail))
+           a = merge_conditions(a,backend.values_at(edge,:tail))
         end
         a
       end
