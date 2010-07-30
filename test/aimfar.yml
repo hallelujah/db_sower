@@ -1,0 +1,12 @@
+aimfar_prod:
+  adapter: mysql
+# La base de données est en latin1 mais les données sont en utf-8 (risque de problème plus tard : Attention!!!) 
+  encoding: latin1
+  reconnect: false
+  database: aimfar_prod
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/webo-mysql-stat.sock
+  orm: active_record
+
