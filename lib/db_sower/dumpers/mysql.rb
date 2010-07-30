@@ -8,6 +8,7 @@ module DbSower
         @ident, @options = ident.clone, args.clone
         @conditions = @options.delete(:conditions)
         @dest = @options.delete(:to)
+        @append = @options.delete(:append) == false ? ">" : ">>"
         @config = ident.to_hash.clone
         @command = @config[:command] || '/usr/bin/mysqldump'
         @database = @config.delete(:database)
@@ -16,7 +17,7 @@ module DbSower
       end
 
       def execute
-        system(*command_line)
+        system(command_line.join(' '))
       end
 
       def command_line
@@ -46,12 +47,15 @@ module DbSower
             ["--#{k}","#{v}"]
           end
         end
-        a << ['--result-file',dest] unless dest.nil? || dest.empty?
         a.sort
       end
 
+      def generate_destination_file_options
+        [[@append,dest].join(' ')] unless dest.nil? || dest.empty?
+      end
+
       def dump_options
-        (generate_credential_options + generate_mysqldump_options + generate_conditions ).map{|a| a.join(' ')}
+        (generate_credential_options + generate_mysqldump_options + generate_conditions + generate_destination_file_options).flatten
       end
 
     end
