@@ -34,11 +34,17 @@ class TestMysqlDumper < Test::Unit::TestCase
 
   def test_generate_credential_options
     credentials = [
+      ["--default-character-set=latin1"],
       ["--host=localhost"],
       ['--password=db_sower'],
       ['--port=3306'],
       ['--socket=/var/run/mysqld/mysqld.sock'],
       ['--user=db_sower'],
+      ['--add-drop-table'],
+      ['--compact'],
+      ['--compatible=mysql40'],
+      ['--skip-comments'],
+      ['--skip-opt'],
       ["database1"],
       ["masques"]
     ]
@@ -48,16 +54,16 @@ class TestMysqlDumper < Test::Unit::TestCase
   end
 
   def test_generate_mysql_dump_options
-    assert_equal [["--default-character-set","latin1"]], @dumper1.generate_mysqldump_options
-    assert_equal [["--default-character-set","latin1"], ["--xml"]], @dumper2.generate_mysqldump_options
+    assert_equal [], @dumper1.generate_mysqldump_options
+    assert_equal [["--xml"]], @dumper2.generate_mysqldump_options
   end
 
   def test_dump_options
-    assert_equal ["--host=localhost", "--password=db_sower", "--port=3306", "--socket=/var/run/mysqld/mysqld.sock", "--user=db_sower", "database1", "masques", "--default-character-set", "latin1", ">> filename.sql"], @dumper3.dump_options
+    assert_equal ["--default-character-set=latin1", "--host=localhost", "--password=db_sower", "--port=3306", "--socket=/var/run/mysqld/mysqld.sock", "--user=db_sower", "--add-drop-table", "--compact", "--compatible=mysql40", "--skip-comments", "--skip-opt", "database1", "masques", ">> filename.sql"], @dumper3.dump_options
   end
 
   def test_command_line
     @dumper3.conditions = @db_backend.adapter(@masque).formatted_conditions(@db_backend)
-    assert_equal ["/usr/bin/mysqldump", "--host=localhost", "--password=db_sower", "--port=3306", "--socket=/var/run/mysqld/mysqld.sock", "--user=db_sower", "database1", "masques", "--default-character-set", "latin1", "--where", "'(`masques`.`id` IN ('1','2'))'", ">> filename.sql"], @dumper3.command_line
+    assert_equal ["/usr/bin/mysqldump", "--default-character-set=latin1", "--host=localhost", "--password=db_sower", "--port=3306", "--socket=/var/run/mysqld/mysqld.sock", "--user=db_sower", "--add-drop-table", "--compact", "--compatible=mysql40", "--skip-comments", "--skip-opt", "database1", "masques", "--where", "'(`masques`.`id` IN ('1','2'))'", ">> filename.sql"], @dumper3.command_line
   end
 end

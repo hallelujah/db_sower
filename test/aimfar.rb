@@ -4,17 +4,8 @@ require 'active_record'
 require 'db_sower'
 
 seed = DbSower::Seed.new 
-
-ActiveRecord::Base.configurations = {
-  :aimfar_prod => 
-  {
-    :database => 'aimfar_prod',
-    :socket => '/tmp/webo-mysql-stat.sock',
-    :username => 'root',
-    :password => '',
-    :host => 'localhost'
-  }
-}.with_indifferent_access
+file = File.expand_path('../aimfar.yml',__FILE__)
+ActiveRecord::Base.configurations = YAML.load_file(file).with_indifferent_access
 
 seed.graft(:identifier => :aimfar_prod) do 
   clients.where(:id => 4)
@@ -26,7 +17,7 @@ seed.graft(:identifier => :aimfar_prod) do
 end
 ident = DbSower::DumpBackend::Identifier.new(ActiveRecord::Base.configurations[:aimfar_prod])
 
-backend = DbSower::DumpBackend.new(seed,File.expand_path('../aimfar.yml',__FILE__))
+backend = DbSower::DumpBackend.new(seed,file)
 
 seed.tsort.each do |node|
   identifier = node.options[:identifier]

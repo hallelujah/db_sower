@@ -29,8 +29,10 @@ module DbSower
       def generate_credential_options
         a = config.map do |k,v|
           ["--#{k}=#{v}"]
-        end.sort
-        a += [[@database],[@table]]
+        end
+        a += [["--default-character-set=#{charset}"]] if charset
+        a.sort!
+        a += [["--add-drop-table"],["--compact"], ["--compatible=mysql40"],["--skip-comments"], ["--skip-opt"], [@database],[@table]]
         a
       end
 
@@ -48,7 +50,6 @@ module DbSower
             ["--#{k}","#{v}"]
           end
         end
-        a += [["--default-character-set",charset]] if charset
         a.sort
       end
 
