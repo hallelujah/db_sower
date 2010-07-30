@@ -71,6 +71,7 @@ module DbSower
         @password = h[:password]
         @host = h[:host]
         @port = h[:port]
+        @encoding = h[:encoding]
       end
 
       def ==(other)
@@ -91,7 +92,7 @@ module DbSower
       end
 
       def to_hash
-        {:database => @database, :user => @user, :password => @password, :socket => @socket, :port => @port, :host => @host}
+        {:database => @database, :user => @user, :password => @password, :socket => @socket, :port => @port, :host => @host, :encoding => @encoding}
       end
     end
 

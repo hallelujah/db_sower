@@ -23,8 +23,8 @@ class TestDumpBackend < Test::Unit::TestCase
   end
 
   def test_values_at_and_credentials
-    assert_equal({:database => 'database1',:port => 3306, :host => 'localhost', :user => 'db_sower', :password => 'db_sower', :socket => '/var/run/mysqld/mysqld.sock' }, @db_backend.credentials(@creation))
-    assert_equal({:database => 'database1',:port => 3306, :host => 'localhost', :user => 'db_sower', :password => 'db_sower', :socket => '/var/run/mysqld/mysqld.sock' }, @db_backend.credentials(@masque))
+    assert_equal({:database => 'database1',:port => 3306, :host => 'localhost', :user => 'db_sower', :password => 'db_sower', :socket => '/var/run/mysqld/mysqld.sock', :encoding => 'latin1' }, @db_backend.credentials(@creation))
+    assert_equal({:database => 'database1',:port => 3306, :host => 'localhost', :user => 'db_sower', :password => 'db_sower', :socket => '/var/run/mysqld/mysqld.sock', :encoding => 'latin1' }, @db_backend.credentials(@masque))
 
     assert_equal({:masque_id => [@c1.id.to_s, @c2.id.to_s]}, @db_backend.values_at(@edge, :head))
     assert_equal({:id => [@c1.id.to_s, @c2.id.to_s]}, @db_backend.values_at(@edge, :tail))

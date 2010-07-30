@@ -2,7 +2,7 @@ module DbSower
   module Dumpers
     class Mysql
 
-      attr_reader :config, :options, :command, :ident, :dest
+      attr_reader :config, :options, :command, :ident, :dest, :charset
       attr_accessor :conditions
       def initialize(ident,args = {})
         @ident, @options = ident.clone, args.clone
@@ -13,6 +13,7 @@ module DbSower
         @command = @config[:command] || '/usr/bin/mysqldump'
         @database = @config.delete(:database)
         @table = @options.delete(:table).to_s
+        @charset = @config.delete(:encoding) 
         @config.delete_if{|k,v| v.nil? || v.respond_to?(:empty?) && v.empty? || ![ :host, :user, :password, :socket, :port].include?(k)}
       end
 
@@ -47,6 +48,7 @@ module DbSower
             ["--#{k}","#{v}"]
           end
         end
+        a += [["--default-character-set",charset]] if charset
         a.sort
       end
 

@@ -5,6 +5,7 @@ db1: &DB
   password: db_sower
   port: 3306
   adapter: mysql
+  encoding: latin1
   database: database1
   orm: active_record
 
