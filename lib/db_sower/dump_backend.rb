@@ -56,12 +56,13 @@ module DbSower
 
     def adapter(n)
       ident = identifier(n)
-      adapter = config[ident][:orm].to_s.camelize
+      adapter = (config[ident][:orm] || :active_record).to_s.camelize
       adapter = DbSower::Adapters.const_get(adapter)
       adapter.new(n,ident,config)
     end
 
     class Identifier
+      attr_reader :database, :socket, :user, :password, :host, :port
       def initialize(options)
         h = options.with_indifferent_access
         @database = h[:database]
