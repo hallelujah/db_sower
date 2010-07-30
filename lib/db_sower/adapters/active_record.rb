@@ -18,8 +18,9 @@ module DbSower
       # SEE DbSower::DumpBackend#values_at
       def formatted_conditions(backend)
         a = nil
+        # node is tail so we have to query backend values at :tail
         node.each_edge do |head,edge|
-          a = merge_conditions(a,backend.values_at(edge,:head))
+          a = merge_conditions(a,backend.values_at(edge,:tail))
         end
         a
       end

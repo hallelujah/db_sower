@@ -33,7 +33,7 @@ class TestDumpBackend < Test::Unit::TestCase
 
   def test_dump_conditions
     adapter = @db_backend.adapter(@masque)
-    assert_equal "(`masques`.`masque_id` IN ('1','2'))", adapter.formatted_conditions(@db_backend)
+    assert_equal "(`masques`.`id` IN ('1','2'))", adapter.formatted_conditions(@db_backend)
     adapter = @db_backend.adapter(@creation)
     assert_equal nil, adapter.formatted_conditions(@db_backend)
   end
