@@ -21,7 +21,7 @@ class TestGraph < Test::Unit::TestCase
     end
   end
 
-  context "draw method" do
+  context "Graph::draw method" do
     should "return the graph argument passed" do
       assert_equal @graph, Sower::Graph.draw(@graph){}
     end
