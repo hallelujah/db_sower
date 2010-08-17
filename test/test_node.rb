@@ -1,9 +1,11 @@
 require 'helper'
 require 'sower/node'
 class TestNode < Test::Unit::TestCase
-  context "A Node instance" do
-    setup { assert(@node = Sower::Node.new('my_identity')) }
+  def setup
+    assert(@node = Sower::Node.new('my_identity'))
+  end
 
+  context "A Node instance" do
     should "respond to identity" do
       assert_respond_to @node, :identity
     end
@@ -23,9 +25,9 @@ class TestNode < Test::Unit::TestCase
     end
 
     should "return identity when sent #ident" do
-      assert_equal "creations", Node.ident('creations')
-      assert_equal "creations", Node.ident(:identity => 'creations')
-      assert_equal "my_identity", Node.ident(@node)
+      assert_equal "creations", Sower::Node.ident('creations')
+      assert_equal "creations", Sower::Node.ident(:identity => 'creations')
+      assert_equal "my_identity", Sower::Node.ident(@node)
     end
 
   end
