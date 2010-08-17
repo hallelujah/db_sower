@@ -1,4 +1,5 @@
 require 'rubygems'
+gem 'test-unit', '>= 2.1'
 require 'test/unit'
 require 'shoulda'
 
