@@ -16,4 +16,17 @@ class TestNode < Test::Unit::TestCase
       assert_respond_to @node, :conditions
     end
   end
+
+  context "Node class" do
+    should "respond to ident" do
+      assert_respond_to Sower::Node, :ident
+    end
+
+    should "return identity when sent #ident" do
+      assert_equal "creations", Node.ident('creations')
+      assert_equal "creations", Node.ident(:identity => 'creations')
+      assert_equal "my_identity", Node.ident(@node)
+    end
+
+  end
 end
