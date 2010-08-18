@@ -1,4 +1,7 @@
 module Sower
+  # A node is an entity that stores information
+  # Each node of a graph must be unique, identified by identity.
+  # A node can have some conditions
   class Node
 
     attr_reader :identity, :conditions
@@ -8,11 +11,15 @@ module Sower
       @conditions = nil
     end
 
-    def edges(graph)
+    # Retrieve edges of this node in a graph
+    #   direction can be :tail, :head, or :both (default)
+    def edges(graph,direction = :both)
       raise NotImplementedMethodError
     end
 
     class << self
+      # Determine identity of a node
+      #   identity_or_node can be a Hash, String or Node 
       def ident(identity_or_node)
         case identity_or_node
         when Hash
@@ -27,6 +34,7 @@ module Sower
       end
 
       protected ### PROTECTED ###
+      # TODO must implement more cases
       def ident_from_hash(hash)
         hash[:identity]
       end

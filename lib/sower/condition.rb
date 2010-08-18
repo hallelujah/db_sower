@@ -6,6 +6,7 @@ module Sower
       @values = [condition]
     end
 
+    # Append condition to the values
     def <<(condition)
       @values << condition
     end
