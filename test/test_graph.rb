@@ -3,16 +3,40 @@ require 'sower/graph'
 class TestGraph < Test::Unit::TestCase
 
   def setup
-    assert(@graph = Sower::Graph.new) 
+    assert(@graph = Sower::Graph.new)
   end
 
   context "A Graph instance" do
+    should "respond to edges" do
+      assert_respond_to @graph, :edges
+    end
+
+    should "return a Hash when sent #edges" do
+      assert_instance_of Hash, @graph.edges
+    end
+
     should "respond to nodes" do
       assert_respond_to @graph, :nodes
     end
+
     should "return an Array when sent #nodes" do
       assert_instance_of Array, @graph.nodes
     end
+
+    should "respond_to add_edge" do
+      assert_respond_to @graph, :add_edge
+      assert_equal 3, @graph.method(:add_edge).arity
+    end
+
+    should "add and return an edge when sent #add_edge" do
+      tail = Sower::Node.new('tail')
+      head = Sower::Node.new('head')
+      conditions = {'left_hand' => 'right_hand'}
+      assert_instance_of Sower::Edge, @graph.add_edge(tail, head, conditions)
+      assert_instance_of Sower::Edge, @graph.add_edge(tail.identity, head.identity, conditions)
+      assert_instance_of Sower::Edge, @graph.add_edge(Sower::Node.ident(tail) , Sower::Node.ident(head), conditions)
+    end
+
   end
 
   context "Graph class" do
