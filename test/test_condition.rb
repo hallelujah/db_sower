@@ -18,5 +18,11 @@ class TestCondition < Test::Unit::TestCase
       assert_instance_of Array, @condition.values
     end
 
+    should "concat condition when sent #<<" do
+      @condition << {'titi' => 'toto'}
+      assert_equal [{'left_hand' => 'right_hand'},{'titi' => 'toto'}], @condition.values
+
+    end
+
   end
 end
