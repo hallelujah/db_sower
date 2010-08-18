@@ -7,7 +7,7 @@ module Sower
 
     attr_reader :edges
 
-    def initialize
+    def initialize # :nodoc:
       @nodes = {}
       @edges = {}
     end

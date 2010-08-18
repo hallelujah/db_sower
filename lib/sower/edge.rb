@@ -6,7 +6,9 @@ module Sower
   # However, you could provide a blank condition but it is weird
   class Edge
 
-    attr_reader :tail, :head, :condition, :key
+    include Sower::Condition::Methods
+
+    attr_reader :tail, :head, :key
 
     # tail can be whatever argument to pass in Sower::Node.ident
     # head can be whatever argument to pass in Sower::Node.ident
@@ -17,12 +19,6 @@ module Sower
       @condition = Sower::Condition.new(condition)
       @key = [@tail,@head]
     end
-
-    # Append a condition purpose to condition
-    def add_condition!(cond)
-      @condition << condition
-    end
-
 
   end
 end
