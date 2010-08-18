@@ -1,4 +1,3 @@
-require 'sower/condition'
 module Sower
   # An edge is a relationship between two nodes
   # In directed graph you must provide a tail and a head
