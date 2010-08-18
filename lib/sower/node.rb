@@ -4,11 +4,17 @@ module Sower
   # A node can have some conditions
   class Node
 
-    attr_reader :identity, :conditions
+    include Sower::Condition::Methods
 
+    attr_reader :identity
+
+    # You can use any argument of Node.ident
+    #   Sower::Node.new(String)
+    #   Sower::Node.new(Hash)
+    #   Sower::Node.new(Node)
+    #
     def initialize(ident)
-      @identity = ident
-      @conditions = nil
+      @identity = Node.ident(ident)
     end
 
     # Retrieve edges of this node in a graph

@@ -14,9 +14,18 @@ class TestNode < Test::Unit::TestCase
       assert_respond_to @node, :edges
     end
 
-    should "respond to conditions" do
-      assert_respond_to @node, :conditions
+    should "respond to condition" do
+      assert_respond_to @node, :condition
     end
+
+    should "return Condition when sent #condition" do
+      assert_instance_of Sower::Condition, @node.condition
+    end
+
+    should "respond to add_condition!" do
+      assert_respond_to @node, :add_condition!
+    end
+
   end
 
   context "Node class" do
