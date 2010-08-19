@@ -19,7 +19,7 @@ module Sower
 
     def initialize # :nodoc:
       @nodes = {}
-      @edges = Hash.new({})
+      @edges = Hash.new{|h,k| h[k] = {}}
     end
 
     # Iterate through each node of the Graph
