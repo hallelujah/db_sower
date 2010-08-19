@@ -26,10 +26,13 @@ module Sower
       @edges = Hash.new({})
     end
 
-    def tsort_each_node(&block) # :nodoc:
+    # Iterate through each node of the Graph
+    # All the node must be reached
+    def tsort_each_node(&block)
       nodes.each(&block)
     end
 
+    # Iterate through each direct child (also called head) of the node
     def tsort_each_child(ident,&block) # :nodoc:
       @edges[ident].keys.each(&block)
     end

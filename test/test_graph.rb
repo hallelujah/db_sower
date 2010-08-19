@@ -29,6 +29,21 @@ class TestGraph < Test::Unit::TestCase
       end
     end
 
+    should "iterate through nodes when sent #tsort_each_node" do
+      i = 0
+      @graph.tsort_each_node{ |n| assert_same(n,@graph.nodes[i]); i+=1}
+    end
+
+    should "iterate through edges keys when sent #tsort_each_child" do
+      @graph.tsort_each_node do |ident|
+        i = 0
+        @graph.tsort_each_child(ident) do |child|
+         assert_same @graph.edges[ident].keys[i], child
+         i += 1
+        end
+      end
+    end
+
     should "respond to edges" do
       assert_respond_to @graph, :edges
     end
