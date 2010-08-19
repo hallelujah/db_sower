@@ -24,7 +24,7 @@ module Sower
 
     # Iterate through each node of the Graph
     # All the node must be reached
-    def tsort_each_node(&block)
+    def each_node(&block)
       nodes.each(&block)
     end
 
@@ -32,6 +32,16 @@ module Sower
     def tsort_each_child(ident,&block) # :nodoc:
       @edges[ident].keys.each(&block)
     end
+
+    # Iterate through each node of the Graph
+    # All the node must be reached
+    alias tsort_each_node each_node
+
+    # Iterate through edges 
+    def each_edge(&block)
+      @edges.values.map(&:values).flatten.each(&block)
+    end
+
 
     # Retrieve a node in hash @\nodes
     # You can pass whatever argument as in Node.ident
@@ -62,7 +72,7 @@ module Sower
     # You must pass in :
     #   - tail identity or a tail node
     #   - head identity or a head node
-    #   - condition that linked tail and head
+    #   - condition that linked tail with head
     def add_edge(tail,head,condition)
       edge = Sower::Edge.new(tail,head,condition)
       tail_ident,head_ident = edge.key
@@ -77,13 +87,13 @@ module Sower
     end
 
     class << self
-      # A wrapper method to use when configuring the graph
+      # A wrapper method to use to configuring the graph
       def draw(graph = self.new,&block)
         raise ArgumentError, "<graph> must be a Sower::Graph instance" unless self === graph
         graph.instance_exec(&block)
         graph
       end
-      end
+    end
 
   end
 end

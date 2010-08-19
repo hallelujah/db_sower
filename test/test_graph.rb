@@ -98,6 +98,31 @@ class TestGraph < Test::Unit::TestCase
         @graph.add_edge('tail','head',{})
       end
     end
+
+    should "respond to each_node" do
+      assert_respond_to @graph, :each_node
+    end
+
+    should "respond to each_edge" do
+      assert_respond_to @graph, :each_edge
+    end
+
+    should "iterate through nodes when sent #each_node" do
+      i = 0
+      @graph.each_node do |n|g
+        assert_same n, @graph.nodes[i]
+        i += 1
+      end
+    end
+
+    should "iterate through edge when sent #each_edge" do
+      @graph.add_nodes @tail, @head
+      @graph.add_edge(@tail,@head,nil)
+      assert_operator 0, :<, @graph.edges.size
+      @graph.each_edge do |e|
+        assert_instance_of Sower::Edge, e
+      end
+    end
   end
 
   context "Graph class" do
