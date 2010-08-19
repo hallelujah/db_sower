@@ -43,5 +43,10 @@ class TestEdge < Test::Unit::TestCase
     should "respond_to add_condition!" do
       assert_respond_to @edge, :add_condition!
     end
+
+    should "be the same" do
+      edge = Sower::Edge.new('tail','head',{'left_hand' => 'right_hand'})
+      assert_equal edge, @edge
+    end
   end
 end

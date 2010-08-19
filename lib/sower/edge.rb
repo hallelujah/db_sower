@@ -20,5 +20,9 @@ module Sower
       @key = [@tail,@head]
     end
 
+    def ==(other)
+      other.is_a?(Sower::Edge) && [:key,:condition].all?{ |k| other.__send__(k) == self.__send__(k)}
+    end
+
   end
 end
