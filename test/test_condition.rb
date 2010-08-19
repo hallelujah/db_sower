@@ -21,7 +21,11 @@ class TestCondition < Test::Unit::TestCase
     should "concat condition when sent #<<" do
       @condition << {'titi' => 'toto'}
       assert_equal [{'left_hand' => 'right_hand'},{'titi' => 'toto'}], @condition.values
+    end
 
+    should "be the same" do
+      cond = Sower::Condition.new({'left_hand' => 'right_hand'})
+      assert_equal cond, @condition
     end
 
   end

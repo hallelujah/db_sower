@@ -29,5 +29,9 @@ module Sower
     def <<(condition)
       @values << condition
     end
+
+    def ==(other)
+      other.is_a?(Sower::Condition) && other.values == self.values
+    end
   end
 end
