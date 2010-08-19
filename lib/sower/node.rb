@@ -17,10 +17,30 @@ module Sower
       @identity = Node.ident(ident)
     end
 
+    class EdgePattern #:nodoc:
+      def initialize(n)
+        @node = n
+      end
+      def ===(h)
+        h.has_key?(@node.identity)
+      end
+    end
     # Retrieve edges of this node in a graph
     #   direction can be :tail, :head, or :both (default)
     def edges(graph,direction = :both)
-      raise NotImplementedMethodError
+      a = []
+      case direction
+      when :tail 
+        pattern = EdgePattern.new(self)
+        a += (graph.edges.values.grep(pattern){ |hash| hash[self.identity] } || [])
+      when :head
+        a += graph.edges[self.identity].values
+      when :both 
+        a += edges(graph,:head)
+        a += edges(graph,:tail)
+      end
+      a
+      #      raise NotImplementedError, "edges is not implemented"
     end
 
     class << self
