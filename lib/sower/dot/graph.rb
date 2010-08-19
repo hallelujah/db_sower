@@ -24,7 +24,7 @@ module Sower
       end
 
       def draw(filename, format = :dot)
-        @graph.tsort.each do |ident|
+        @graph.nodes.each do |ident|
           @digraph.add_node(ident, :label => ident)
           @graph.tsort_each_child(ident) do |child|
             @digraph.add_edge(ident,child)
