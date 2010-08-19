@@ -20,6 +20,8 @@ module Sower
       @key = [@tail,@head]
     end
 
+    # Compare self with other
+    # It returns true if key and condition are the same
     def ==(other)
       other.is_a?(Sower::Edge) && [:key,:condition].all?{ |k| other.__send__(k) == self.__send__(k)}
     end

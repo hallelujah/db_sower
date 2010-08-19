@@ -25,6 +25,7 @@ module Sower
         h.has_key?(@node.identity)
       end
     end
+
     # Retrieve edges of this node in a graph
     #   direction can be :tail, :head, or :both (default)
     def edges(graph,direction = :both)
@@ -40,7 +41,6 @@ module Sower
         a += edges(graph,:tail)
       end
       a
-      #      raise NotImplementedError, "edges is not implemented"
     end
 
     class << self

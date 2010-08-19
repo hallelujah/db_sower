@@ -30,6 +30,8 @@ module Sower
       @values << condition
     end
 
+    # Compare self with other
+    # It returns true if values are the same
     def ==(other)
       other.is_a?(Sower::Condition) && other.values == self.values
     end
