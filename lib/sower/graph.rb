@@ -8,11 +8,7 @@ module Sower
 
     class NodeDoesNotExistError < StandardError # :nodoc:
       def initialize(n = nil)
-        if n
-          m = "node <%s> does not exist" % n.to_s
-        else 
-          m = "node does not exist"
-        end
+        m = "node <%s> does not exist" % n.inspect
         super(m)
       end
     end
