@@ -7,12 +7,12 @@ module Sower
       ##
       # :attr_reader: condition
       define_method :condition do
-        @condition ||= Condition.new(nil)
+        @condition ||= Condition.new
       end
 
       # Append a condition purpose to condition
       def add_condition!(cond)
-        condition << condition
+        condition << cond
       end
     end
 
@@ -21,13 +21,14 @@ module Sower
     # You can use any Object which implements to_condition
     #   Sower::Condition.new(Object)
     #
-    def initialize(condition)
-      @values = [condition]
+    def initialize(cond = nil)
+      @values = []
+      @values << cond if cond #Sower::Scope.create(cond) if cond
     end
 
     # Append condition to the values
-    def <<(condition)
-      @values << condition
+    def <<(cond)
+      @values << cond #Sower::Scope.create(cond)
     end
 
     # Compare self with other

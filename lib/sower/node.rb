@@ -50,12 +50,12 @@ module Sower
         case identity_or_node
         when Hash
           ident_from_hash(identity_or_node)
-        when String
-          identity_or_node
+        when String, Symbol
+          identity_or_node.to_s
         when ::Sower::Node
           identity_or_node.identity
         else
-          raise ArgumentError,"Must be a Sower::Node, a Hash or a String"
+          raise ArgumentError,"Must be a Sower::Node, a Hash, a Symbol or a String"
         end
       end
 

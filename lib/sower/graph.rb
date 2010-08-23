@@ -79,7 +79,9 @@ module Sower
       raise NodeDoesNotExistError, tail_ident unless @nodes.has_key?(tail_ident)
       raise NodeDoesNotExistError, head_ident unless @nodes.has_key?(head_ident)
       if @edges[tail_ident].has_key?(head_ident)
-        @edges[tail_ident][head_ident].add_condition!(edge.condition)
+        edge.condition.values.each do |cond|
+          @edges[tail_ident][head_ident].add_condition!(cond)
+        end
       else
         @edges[tail_ident][head_ident] = edge
       end

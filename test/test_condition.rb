@@ -1,11 +1,20 @@
 require 'helper'
-require 'sower/condition'
 class TestCondition < Test::Unit::TestCase
   def setup
-    assert(@condition = Sower::Condition.new({'left_hand' => 'right_hand'}))
+    users = Sower::Node.new(:users)
+    @users = Sower::Relation::Table.new(users)
+    @attribute = Sower::Relation::Attribute.new(@users, :name)
+    @value = Sower::Relation::Value.in(['john', 'edward'])
+    @statement = Sower::Relation::Statement.new(@attribute,@value)
+    assert(@condition = Sower::Condition.new)
   end
 
   context "A Condition instance" do
+    should "condition #values empty when instantiated with no arguments" do
+      assert(cond = Sower::Condition.new)
+      assert cond.values.empty?
+    end
+
     should "respond to << " do
       assert_respond_to @condition, :<<
     end
@@ -19,13 +28,17 @@ class TestCondition < Test::Unit::TestCase
     end
 
     should "concat condition when sent #<<" do
-      @condition << {'titi' => 'toto'}
-      assert_equal [{'left_hand' => 'right_hand'},{'titi' => 'toto'}], @condition.values
+      @condition << @statement
+      assert_equal [@statement], @condition.values
     end
 
     should "be the same" do
-      cond = Sower::Condition.new({'left_hand' => 'right_hand'})
+      cond = Sower::Condition.new
       assert_equal cond, @condition
+      cond << @statement
+      @condition << @statement
+      assert_equal cond, @condition
+
     end
 
   end
