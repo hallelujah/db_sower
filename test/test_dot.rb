@@ -17,7 +17,7 @@ class TestDot < Test::Unit::TestCase
     @graph.add_edge(@head2,@tail)
     @graph.add_edge(@head1,@head2)
     assert_nothing_raised do
-      puts @digraph.draw("cyclic.png", :png)
+      @digraph.draw("cyclic.png", :png)
     end
   end
 
