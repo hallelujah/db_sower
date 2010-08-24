@@ -56,12 +56,12 @@ end
 
 def update_rails
   return if @rails_updated
-  @git_branch = "3-0-stable"
   @git_branch = "master"
+  @git_branch = "3-0-stable"
   @dir = File.join(ENV['HOME'],'Software','rails')
   @git_dir = File.join(@dir,'.git')
   @branch = `git --work-tree=#{@dir} --git-dir=#{@git_dir} name-rev --name-only HEAD`.strip
-  @git_cmd="cd #{@dir} && GIT_WORK_TREE=#{@dir} GIT_DIR=#{@git_dir} git --work-tree=#{@dir} --git-dir=#{@git_dir}"
+  @git_cmd="cd #{@dir} && GIT_INDEX_FILE=#{File.join(@git_dir,'index')} GIT_OBJECT_DIRECTORY=#{File.join(@git_dir,'objects')} GIT_WORK_TREE=#{@dir} GIT_DIR=#{@git_dir} git --work-tree=#{@dir} --git-dir=#{@git_dir}"
   unless @branch == @git_branch
     Dir.chdir(@dir) do
       puts "checing out #{@git_branch} branch"
@@ -97,6 +97,7 @@ namespace :vendor do
       desc "Update vendor/#{lib}"
       task lib.to_sym do
         dest = File.expand_path("../lib/vendor",__FILE__)
+        FileUtils.mkdir_p(dest)
         version = `gem list #{lib}`.strip
         m = version.match(/.*\(([^,]*).*\).*/)
         if m
