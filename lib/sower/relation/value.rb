@@ -1,13 +1,3 @@
-class Object
-  def to_sql
-    "'#{to_s}'"
-  end
-end
-class Array
-  def to_sql
-    map(&:to_sql).join(',')
-  end
-end
 module Sower
   module Relation
     module Value
@@ -53,7 +43,8 @@ module Sower
       }
 
       IDENTIFIERS.each do |k,v|
-        self.const_set(k.to_s.classify, Class.new(Base){ self.key = k})
+       klass = self.const_set(k.to_s.classify, Class.new(Base))
+       klass.key = k
       end
 
       extend self

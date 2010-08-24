@@ -15,10 +15,6 @@ module Sower
         @node.identity.to_s
       end
 
-      def to_sql
-        "1 = 1"
-      end
-
     end
   end
 end

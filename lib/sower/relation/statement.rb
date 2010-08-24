@@ -16,37 +16,55 @@ module Sower
       end
 
       def to_sql
-        [@attribute.to_sql,@value.to_sql].join(' ')
+        [@attribute.to_sql,@value.to_sql].compact.join(' ')
       end
+
+      protected
+      def paren
+        res = yield.to_s.strip
+        res.empty? ? nil : "(#{res})"
+      end
+
     end
 
     class AndStatement < Statement
       def to_sql
-        "(#{@attribute.to_sql}) AND (#{@value.to_sql})"
+        [paren{@attribute.to_sql},paren{@value.to_sql}].compact.join(" \nAND " )
       end
     end
 
     class OrStatement < Statement
       def to_sql
-        "(#{@attribute.to_sql}) OR (#{@value.to_sql})"
+        "(#{@attribute.to_sql}) \nOR (#{@value.to_sql})"
       end
     end
 
     module Stateable
-      # :attr_reader: statement
-      define_method :statements do
-        @statements ||= []
+      def statements
+        @statements
       end
 
       def where(statement)
-        statements << Sower::Relation::AndStatement.new(self,statement)
+        if statements.nil?
+          @statements = Sower::Relation::Statement.new(@statements,statement)
+        else
+          @statements = Sower::Relation::AndStatement.new(@statements,statement)
+        end
         self
       end
-      alias and where
+
+      def and(statement)
+        @statements = Sower::Relation::AndStatement.new(@statements,statement)
+        self
+      end
 
       def or(statement)
-        statements << Sower::Relation::OrStatement.new(self,statement)
+        @statements = Sower::Relation::OrStatement.new(@statements,statement)
         self
+      end
+
+      def to_sql
+        nil
       end
     end
 
