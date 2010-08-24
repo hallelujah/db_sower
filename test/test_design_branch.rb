@@ -16,24 +16,24 @@ class TestDesignBranch < Test::Unit::TestCase
       assert_respond_to @branch, :statements
     end
     should "respond to where" do
-      assert @branch.statements.empty?
+      assert @branch.statements.nil?
       assert_respond_to @branch, :where
       assert_same @branch, @branch.where(@users[:client_id].eq(@clients[:id]))
-      assert !@branch.statements.empty?
+      assert !@branch.statements.nil?
     end
 
     should "respond to and" do
-      assert @branch.statements.empty?
+      assert_nil @branch.statements
       assert_respond_to @branch, :and
       assert_same @branch, @branch.and(@users[:client_id].eq(@clients[:id]))
-      assert !@branch.statements.empty?
+      assert_not_nil @branch.statements
     end
 
     should "respond to or" do
-      assert @branch.statements.empty?
+      assert_nil @branch.statements
       assert_respond_to @branch, :or
       assert_same @branch, @branch.or(@users[:client_id].eq(@clients[:id]))
-      assert !@branch.statements.empty?
+      assert_not_nil @branch.statements
     end
   end
 end

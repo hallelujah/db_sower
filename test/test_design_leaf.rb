@@ -42,24 +42,24 @@ class TestDesignLeaf < Test::Unit::TestCase
     end
 
     should "respond to where" do
-      assert @users.statements.empty?
+      assert_nil @users.statements
       assert_respond_to @users, :where
       assert_same @users, @users.where(@users[:client_id].eq(@clients[:id]))
-      assert !@users.statements.empty?
+      assert_not_nil @users.statements
     end
 
     should "respond to and" do
-      assert @users.statements.empty?
+      assert_nil @users.statements
       assert_respond_to @users, :and
       assert_same @users, @users.and(@users[:client_id].eq(@clients[:id]))
-      assert !@users.statements.empty?
+      assert_not_nil @users.statements
     end
 
     should "respond to or" do
-      assert @users.statements.empty?
+      assert_nil @users.statements
       assert_respond_to @users, :or
       assert_same @users, @users.or(@users[:client_id].eq(@clients[:id]))
-      assert !@users.statements.empty?
+      assert_not_nil @users.statements
     end
   end
 end

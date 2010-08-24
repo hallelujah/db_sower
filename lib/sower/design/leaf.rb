@@ -13,9 +13,11 @@ module Sower
       end
 
       def depends_on(leaf)
-        @tree.add_node(leaf.node)
-        edge = @tree.add_edge(self.node,leaf.node)
-        Sower::Design::Branch.new(edge)
+        @tree.add_branch(self,leaf)
+      end
+
+      def to_dot
+        "<id> #{node.identity}||<text> #{statements.to_sql}"
       end
 
     end
