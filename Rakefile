@@ -57,15 +57,23 @@ end
 def update_rails
   return if @rails_updated
   @git_branch = "3-0-stable"
+  @git_branch = "master"
   @dir = File.join(ENV['HOME'],'Software','rails')
   @git_dir = File.join(@dir,'.git')
   @branch = `git --work-tree=#{@dir} --git-dir=#{@git_dir} name-rev --name-only HEAD`.strip
+  @git_cmd="cd #{@dir} && GIT_WORK_TREE=#{@dir} GIT_DIR=#{@git_dir} git --work-tree=#{@dir} --git-dir=#{@git_dir}"
   unless @branch == @git_branch
-    system("git --work-tree=#{@dir} --git-dir=#{@git_dir} co #{@git_branch}") or puts "Can not check out #{@git_branch} stable, is #{@branch}" or exit(1)
+    Dir.chdir(@dir) do
+      puts "checing out #{@git_branch} branch"
+      system("#{@git_cmd} co -f #{@git_branch}") or puts "Can not check out #{@git_branch} stable, is #{@branch}" or exit(1)
+      puts "#{@git_branch} branch checked out"
+    end
   else
     puts "already in branch #{@git_branch}"
   end
-  `cd #{@dir} && git --git-dir=#{git_dir} --work-tree=#{dir} pull`
+  Dir.chdir(@dir) do
+    system("#{@git_cmd} pull -f")
+  end
   @rails_updated = true
 end
 
