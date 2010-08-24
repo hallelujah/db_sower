@@ -14,21 +14,27 @@ module Sower
       def add_condition!(cond)
         condition << cond
       end
+
+      def condition_empty?
+        condition.empty?
+      end
     end
 
     attr_reader :values
+
+    delegate :empty?, :to => :values
 
     # You can use any Object which implements to_condition
     #   Sower::Condition.new(Object)
     #
     def initialize(cond = nil)
       @values = []
-      @values << cond if cond #Sower::Scope.create(cond) if cond
+      self << cond if cond
     end
 
     # Append condition to the values
     def <<(cond)
-      @values << cond #Sower::Scope.create(cond)
+      @values << cond
     end
 
     # Compare self with other

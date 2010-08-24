@@ -13,9 +13,9 @@ class TestDot < Test::Unit::TestCase
 
   should "draw graph even cyclic dependency" do
     @graph.add_nodes @head1, @head2, @tail
-    @graph.add_edge(@tail,@head1,nil)
-    @graph.add_edge(@head2,@tail,nil)
-    @graph.add_edge(@head1,@head2,nil)
+    @graph.add_edge(@tail,@head1)
+    @graph.add_edge(@head2,@tail)
+    @graph.add_edge(@head1,@head2)
     assert_nothing_raised do
       puts @digraph.draw("cyclic.png", :png)
     end
@@ -24,8 +24,8 @@ class TestDot < Test::Unit::TestCase
 
   should "draw" do
     @graph.add_nodes @head1, @head2, @tail
-    @graph.add_edge(@tail,@head1,nil)
-    @graph.add_edge(@tail,@head2,nil)
+    @graph.add_edge(@tail,@head1)
+    @graph.add_edge(@tail,@head2)
     assert_nothing_raised do
       @digraph.draw("normal.png", :png)
     end

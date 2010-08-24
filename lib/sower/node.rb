@@ -1,10 +1,7 @@
 module Sower
   # A node is an entity that stores information
   # Each node of a graph must be unique, identified by identity.
-  # A node can have some conditions
   class Node
-
-    include Sower::Condition::Methods
 
     attr_reader :identity
 
@@ -62,7 +59,7 @@ module Sower
       protected ### PROTECTED ###
       # TODO must implement more cases
       def ident_from_hash(hash)
-        hash[:identity]
+        hash[:identity] or raise " key :identity must be set"
       end
     end
 

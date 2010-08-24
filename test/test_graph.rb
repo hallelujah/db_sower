@@ -67,15 +67,14 @@ class TestGraph < Test::Unit::TestCase
 
     should "respond_to add_edge" do
       assert_respond_to @graph, :add_edge
-      assert_equal 3, @graph.method(:add_edge).arity
+      assert_equal 2, @graph.method(:add_edge).arity
     end
 
     should "add and return an edge when sent #add_edge" do
       @graph.add_nodes @tail,@head
-      conditions = {'left_hand' => 'right_hand'}
-      assert_instance_of Sower::Edge, @graph.add_edge(@tail, @head, conditions)
-      assert_instance_of Sower::Edge, @graph.add_edge(@tail.identity, @head.identity, conditions)
-      assert_instance_of Sower::Edge, @graph.add_edge(Sower::Node.ident(@tail) , Sower::Node.ident(@head), conditions)
+      assert_instance_of Sower::Edge, @graph.add_edge(@tail, @head)
+      assert_instance_of Sower::Edge, @graph.add_edge(@tail.identity, @head.identity)
+      assert_instance_of Sower::Edge, @graph.add_edge(Sower::Node.ident(@tail) , Sower::Node.ident(@head))
     end
 
     should "return node in @nodes when sent #add_node" do
@@ -95,7 +94,7 @@ class TestGraph < Test::Unit::TestCase
 
     should "raise NotDoesNotExistError if node was not added first when sent #add_edge" do
       assert_raise Sower::Graph::NodeDoesNotExistError do
-        @graph.add_edge('tail','head',{})
+        @graph.add_edge('tail','head')
       end
     end
 
@@ -117,7 +116,7 @@ class TestGraph < Test::Unit::TestCase
 
     should "iterate through edge when sent #each_edge" do
       @graph.add_nodes @tail, @head
-      @graph.add_edge(@tail,@head,nil)
+      @graph.add_edge(@tail,@head)
       assert_operator 0, :<, @graph.edges.size
       @graph.each_edge do |e|
         assert_instance_of Sower::Edge, e

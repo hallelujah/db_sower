@@ -42,6 +42,11 @@ module Sower
       @edges.values.map(&:values).flatten.each(&block)
     end
 
+    # Returns the number of edges
+    def edges_size
+      @edges.values.map(&:values).flatten.size
+    end
+
 
     # Retrieve a node in hash @\nodes
     # You can pass whatever argument as in Node.ident
@@ -72,20 +77,16 @@ module Sower
     # You must pass in :
     #   - tail identity or a tail node
     #   - head identity or a head node
-    #   - condition that linked tail with head
-    def add_edge(tail,head,condition)
-      edge = Sower::Edge.new(tail,head,condition)
+    def add_edge(tail,head)
+      edge = Sower::Edge.new(tail,head)
       tail_ident,head_ident = edge.key
       raise NodeDoesNotExistError, tail_ident unless @nodes.has_key?(tail_ident)
       raise NodeDoesNotExistError, head_ident unless @nodes.has_key?(head_ident)
       if @edges[tail_ident].has_key?(head_ident)
-        edge.condition.values.each do |cond|
-          @edges[tail_ident][head_ident].add_condition!(cond)
-        end
+        @edges[tail_ident][head_ident]
       else
         @edges[tail_ident][head_ident] = edge
       end
-      @edges[tail_ident][head_ident]
     end
 
     class << self

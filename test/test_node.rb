@@ -14,34 +14,22 @@ class TestNode < Test::Unit::TestCase
       assert_respond_to @node, :edges
     end
 
-    should "respond to condition" do
-      assert_respond_to @node, :condition
-    end
-
-    should "return Condition when sent #condition" do
-      assert_instance_of Sower::Condition, @node.condition
-    end
-
-    should "respond to add_condition!" do
-      assert_respond_to @node, :add_condition!
-    end
-
     should "return a Array of Edge when sent #edges" do
       graph = Sower::Graph.new
       tail = Sower::Node.new('tail')
       head = Sower::Node.new('head')
       other_tail = Sower::Node.new('other_tail')
       graph.add_nodes @node, tail, head, other_tail
-      graph.add_edge(tail,head,{})
-      graph.add_edge(other_tail,tail,{})
+      graph.add_edge(tail,head)
+      graph.add_edge(other_tail,tail)
       assert_instance_of Array, tail.edges(graph, :head)
       assert_equal [], @node.edges(graph,:both)
       assert_equal [], @node.edges(graph,:tail)
       assert_equal [], @node.edges(graph,:head)
-      assert_equal [Sower::Edge.new(tail,head,{})],tail.edges(graph, :head)
-      assert_equal [Sower::Edge.new(other_tail,tail,{})],tail.edges(graph,:tail)
-      assert_equal [Sower::Edge.new(tail,head,{}), Sower::Edge.new(other_tail,tail,{})],tail.edges(graph)
-      assert_equal [Sower::Edge.new(tail,head,{}), Sower::Edge.new(other_tail,tail,{})],tail.edges(graph,:both)
+      assert_equal [Sower::Edge.new(tail,head)],tail.edges(graph, :head)
+      assert_equal [Sower::Edge.new(other_tail,tail)],tail.edges(graph,:tail)
+      assert_equal [Sower::Edge.new(tail,head), Sower::Edge.new(other_tail,tail)],tail.edges(graph)
+      assert_equal [Sower::Edge.new(tail,head), Sower::Edge.new(other_tail,tail)],tail.edges(graph,:both)
     end
 
   end

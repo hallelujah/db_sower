@@ -2,7 +2,7 @@ require 'helper'
 require 'sower/edge'
 class TestEdge < Test::Unit::TestCase
   def setup
-    assert(@edge = Sower::Edge.new('tail','head',{'left_hand' => 'right_hand'}))
+    assert(@edge = Sower::Edge.new('tail','head'))
   end
 
   context "An Edge instance" do
@@ -24,14 +24,6 @@ class TestEdge < Test::Unit::TestCase
       assert_equal Sower::Node.ident('head'), @edge.head
     end
 
-    should "respond to condition" do
-      assert_respond_to @edge, :condition
-    end
-
-    should "return a Condition when sent #condition" do
-      assert_instance_of Sower::Condition, @edge.condition
-    end
-
     should "respond to key" do
       assert_respond_to @edge, :key
     end
@@ -40,12 +32,8 @@ class TestEdge < Test::Unit::TestCase
       assert_equal [Sower::Node.ident('tail'),Sower::Node.ident('head')], @edge.key
     end
 
-    should "respond_to add_condition!" do
-      assert_respond_to @edge, :add_condition!
-    end
-
     should "be the same" do
-      edge = Sower::Edge.new('tail','head',{'left_hand' => 'right_hand'})
+      edge = Sower::Edge.new('tail','head')
       assert_equal edge, @edge
     end
   end
