@@ -25,8 +25,8 @@ class Array
 end
 
 require 'active_support/all'
-require 'active_support/version'
-puts ActiveSupport::VERSION::STRING
+#require 'active_support/version'
+#puts ActiveSupport::VERSION::STRING
 
 
 require 'sower/relation'
