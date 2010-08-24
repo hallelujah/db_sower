@@ -20,5 +20,6 @@ require 'sower/condition'
 require 'sower/node'
 require 'sower/edge'
 require 'sower/graph'
+require 'sower/design'
 module Sower # :nodoc:
 end

@@ -32,5 +32,23 @@ module Sower
       end
     end
 
+    module Stateable
+      # :attr_reader: statement
+      define_method :statements do
+        @statements ||= []
+      end
+
+      def where(statement)
+        statements << Sower::Relation::AndStatement.new(self,statement)
+        self
+      end
+      alias and where
+
+      def or(statement)
+        statements << Sower::Relation::OrStatement.new(self,statement)
+        self
+      end
+    end
+
   end
 end
