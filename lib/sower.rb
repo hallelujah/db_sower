@@ -23,6 +23,16 @@ class Array
     map(&:to_sql).join(',')
   end
 end
+class MagicPattern
+  def initialize(tested,&block)
+    @tested = tested
+    @proc = block
+  end
+
+  def ===(other)
+    @proc.call(@tested,other)
+  end
+end
 
 require 'active_support/all'
 #require 'active_support/version'
@@ -30,10 +40,10 @@ require 'active_support/all'
 
 
 require 'sower/relation'
-require 'sower/condition'
 require 'sower/node'
 require 'sower/edge'
 require 'sower/graph'
 require 'sower/design'
+require 'sower/dumper'
 module Sower # :nodoc:
 end
