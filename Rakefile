@@ -52,6 +52,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = "sower #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.rdoc_files.exclude('lib/vendor/*')
 end
 
 def update_rails
