@@ -18,9 +18,10 @@ class TestRelationStatement < Test::Unit::TestCase
     end
 
     should "return a query String when sent #to_sql" do
-    statement = @statement.where(@users[:id].ne(1).and(@users[:status].eq(1)))
-    sql = statement.or(@users[:login].like("su%")).to_sql
-    assert_equal "((`users`.`name` IN ('john','edward')) \nAND ((`users`.`id` != '1') \nAND (`users`.`status` = '1'))) \nOR (`users`.`login` LIKE 'su%')", sql
+      statement = @statement.where(@users[:id].ne(1).and(@users[:status].eq(1)))
+      sql = statement.or(@users[:login].like("su%")).to_sql
+      assert_equal "((`users`.`name` IN ('john','edward')) \nAND ((`users`.`id` != '1') \nAND (`users`.`status` = '1'))) \nOR (`users`.`login` LIKE 'su%')", sql
     end
+
   end
 end
