@@ -15,6 +15,10 @@ class TestDesignLeaf < Test::Unit::TestCase
       assert_instance_of Sower::Relation::Table, @users.table
     end
 
+    should "return nil when sent #to_sql" do
+      assert_nil @users.to_sql
+    end
+
     should "respond to node" do
       assert_respond_to @users, :node
       assert_instance_of Sower::Node, @users.node
