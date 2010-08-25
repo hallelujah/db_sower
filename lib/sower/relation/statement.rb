@@ -9,15 +9,15 @@ module Sower
 
       # Create a new AndStatement with self as attribute and statement as value
       # It is a simple chaining
-      def where(statement)
-        AndStatement.new(self, statement)
+      def where(state)
+        AndStatement.new(self, state)
       end
       alias and where
 
       # Create a new OrStatement with self as attribute and statement as value
       # It is a simple chaining
-      def or(statement)
-        OrStatement.new(self,statement)
+      def or(state)
+        OrStatement.new(self, state)
       end
 
       # Generate a SQL String well formatted
@@ -66,33 +66,33 @@ module Sower
 
     module Stateable
       ##
-      # :attr_reader: statements
-      def statements
-        @statements
+      # :attr_reader: statement
+      def statement
+        @statement
       end
 
       # Generate a new Statement or AndStatement depending on statement.is_nil? and set statement to it.
       # Return self
-      def where(statement)
-        if statements.nil?
-          @statements = Sower::Relation::Statement.new(@statements,statement)
+      def where(state)
+        if statement.nil?
+          @statement = Sower::Relation::Statement.new(@statement,state)
         else
-          @statements = Sower::Relation::AndStatement.new(@statements,statement)
+          @statement = Sower::Relation::AndStatement.new(@statement,state)
         end
         self
       end
 
       # Generate a new AndStatement and set statement to it.
       # Return self
-      def and(statement)
-        @statements = Sower::Relation::AndStatement.new(@statements,statement)
+      def and(state)
+        @statement = Sower::Relation::AndStatement.new(@statement,state)
         self
       end
 
       # Generate a new OrStatement and set statement to it.
       # Return self
-      def or(statement)
-        @statements = Sower::Relation::OrStatement.new(@statements,statement)
+      def or(state)
+        @statement = Sower::Relation::OrStatement.new(@statement,state)
         self
       end
 

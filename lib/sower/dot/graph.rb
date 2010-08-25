@@ -31,7 +31,7 @@ module Sower
           @digraph.add_node(ident, :label => label )
           @graph.tsort_each_child(ident) do |child|
             edge = @graph.edges[ident][child]
-            label = @tree.branches[edge.key].statements.to_sql if @tree.branches[edge.key]
+            label = @tree.branches[edge.key].statement.to_sql if @tree.branches[edge.key]
             @digraph.add_edge(ident,child, :label => label)
           end
         end

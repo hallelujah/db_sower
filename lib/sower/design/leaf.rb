@@ -17,7 +17,7 @@ module Sower
       end
 
       def to_dot
-        "<id> #{node.identity}||<text> #{statements.to_sql}"
+        "<id> #{node.identity}||<text> #{statement.to_sql}"
       end
 
     end

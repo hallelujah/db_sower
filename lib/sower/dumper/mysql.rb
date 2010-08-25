@@ -7,11 +7,11 @@ module Sower
       end
 
       def standalone?
-        nodes.all?{|n| self.class.new(n,@tree).standalone?} && statements.nil?
+        nodes.all?{|n| self.class.new(n,@tree).standalone?} && statement.nil?
       end
 
-      def statements
-        @tree.leaves[@node.identity].statements
+      def statement
+        @tree.leaves[@node.identity].statement
       end
 
       def branches
