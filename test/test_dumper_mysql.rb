@@ -49,5 +49,11 @@ class TestDumperMysql < Test::Unit::TestCase
       assert @user_dumper.super_nodes.empty?
     end
 
+    should "respond to tables" do
+      assert_respond_to @user_dumper, :tables
+      assert @user_dumper.tables.any?
+      assert @client_dumper.tables.any?
+    end
+
   end
 end

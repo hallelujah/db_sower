@@ -31,6 +31,14 @@ module Sower
         @tree.graph.tail_nodes_of(@node)
       end
 
+      # Fetches all tables in tree of node
+      def tables
+        pattern = MagicPattern.new(@node.identity) do |tested,(ident,leaf)|
+          ident == tested
+        end
+        @tree.leaves.grep(pattern){|ident,leaf| leaf.table}
+      end
+
       def inspect
         "<#<#{self.class}:0x#{(self.object_id * 2).to_s(16)}>"
       end
