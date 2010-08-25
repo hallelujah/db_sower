@@ -21,8 +21,14 @@ module Sower
         end
       end
 
+      # Fetches all nodes under this one
       def nodes
         @tree.graph.head_nodes_of(@node)
+      end
+
+      # Fetches all nodes upon this one
+      def super_nodes
+        @tree.graph.tail_nodes_of(@node)
       end
 
       def inspect
