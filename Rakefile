@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "sower"
+    gem.name = "db_sower"
     gem.summary = %Q{TODO: one-line summary of your gem}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "hery@rails-royce.org"
-    gem.homepage = "http://github.com/hallelujah/sower"
+    gem.homepage = "http://github.com/hallelujah/db_sower"
     gem.authors = ["hallelujah"]
     gem.add_development_dependency "shoulda", ">= 0"
     gem.add_development_dependency "test-unit", ">= 2.1.0"
@@ -49,7 +49,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "sower #{version}"
+  rdoc.title = "db_sower #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
   rdoc.rdoc_files.exclude('lib/vendor/*')

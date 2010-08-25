@@ -1,4 +1,4 @@
-= sower
+= db_sower
 
 Description goes here.
 
