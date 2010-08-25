@@ -26,6 +26,17 @@ class TestDumperMysql < Test::Unit::TestCase
       assert_equal false, @client_dumper.standalone?
     end
 
+    should "respond to inspect" do
+      assert_respond_to @client_dumper, :inspect
+      assert @client_dumper.inspect
+    end
+
+    should "respond to branches" do
+      assert_respond_to @client_dumper, :branches
+      assert @client_dumper.branches.empty?
+      assert @user_dumper.branches.any?
+    end
+
     should "respond to nodes" do
       assert_respond_to @client_dumper, :nodes
       assert @client_dumper.nodes.empty?

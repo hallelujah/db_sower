@@ -15,7 +15,10 @@ module Sower
       end
 
       def branches
-        @tree.branches.select{|k,v| k.first == @node.identity}.values
+        pattern = MagicPattern.new(@node.identity){|tested,(k,v)| tested == k.first}
+        @tree.branches.grep(pattern) do |k,v|
+          v
+        end
       end
 
       def nodes
