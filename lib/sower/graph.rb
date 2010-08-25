@@ -33,6 +33,21 @@ module Sower
       @edges[ident].keys.each(&block)
     end
 
+    # Retrieve the head nodes of a node
+    def head_nodes_of(node)
+      ns = []
+      tsort_each_child(Node.ident(node)) do |ident|
+        ns << @nodes[ident]
+      end
+      ns
+    end
+
+    # Retrieve the tail nodes of a node
+    def tail_nodes_of(node)
+      n = Node.ident(node)
+      @nodes.values_at(*@edges.grep(MagicPattern.new(n){|tested,(k,v)| v.has_key?(tested) }){|k,v| k})
+    end
+
     # Iterate through each node of the Graph
     # All the node must be reached
     alias tsort_each_node each_node

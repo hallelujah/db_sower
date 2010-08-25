@@ -31,17 +31,41 @@ class TestGraph < Test::Unit::TestCase
 
     should "iterate through nodes when sent #tsort_each_node" do
       i = 0
-      @graph.tsort_each_node{ |n| assert_same(n,@graph.nodes[i]); i+=1}
+      @graph.add_nodes(@tail,@head)
+      in_loop = false
+      @graph.tsort_each_node do |n|
+        in_loop = true
+        assert_same(n,@graph.nodes[i])
+        i+=1 
+      end
+      assert in_loop
     end
 
     should "iterate through edges keys when sent #tsort_each_child" do
+      @graph.add_nodes(@tail,@head)
+      @graph.add_edge(@tail,@head)
+      in_loop = false
       @graph.tsort_each_node do |ident|
+        in_loop = true
         i = 0
         @graph.tsort_each_child(ident) do |child|
          assert_same @graph.edges[ident].keys[i], child
          i += 1
         end
       end
+      assert in_loop
+    end
+
+    should "returns head nodes of a node when sent #head_nodes_of" do
+      @graph.add_nodes(@tail,@head)
+      @graph.add_edge(@tail,@head)
+      assert_equal [@head], @graph.head_nodes_of(@tail)
+    end
+
+    should "returns tail nodes of a node when sent #head_nodes_of" do
+      @graph.add_nodes(@tail,@head)
+      @graph.add_edge(@tail,@head)
+      assert_equal [@tail], @graph.tail_nodes_of(@head)
     end
 
     should "respond to edges" do
