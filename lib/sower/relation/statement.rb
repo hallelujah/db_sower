@@ -60,7 +60,7 @@ module Sower
       # Generate a SQL String well formatted
       # TODO SQL string must be handled by a SQL formatter ... no matter for now
       def to_sql
-        "(#{@attribute.to_sql}) \nOR (#{@value.to_sql})"
+        [paren{@attribute.to_sql},paren{@value.to_sql}].compact.join(" \nOR " )
       end
     end
 
