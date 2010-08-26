@@ -1,5 +1,7 @@
 module Sower
   module Design
+    # This provides a wrapper class to Sower::Edge
+    # It is stateable, that says it can store statements relationships between leaves
     class Branch
       include Sower::Relation::Stateable
 

@@ -1,5 +1,9 @@
 module Sower
   module Relation
+    # Ths class aims at providing utilities like
+    # users = Sower::Relation::Table.new(node)
+    # users[:id] #=> Sower::Relation::Attribute
+    # The node stores all the credentials (database, host, username, password)
     class Table
       attr_reader :attributes
       delegate :[], :to => :attributes
