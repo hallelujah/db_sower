@@ -43,8 +43,7 @@ class TestDesignTree < Test::Unit::TestCase
           users.depends_on(clients).where(users[:client_id].eq(clients[:id]))
         end
       end
-      edge = Sower::Edge.new(@users.node.identity,@clients.node.identity)
-      assert_equal "`users`.`client_id` = `clients`.`id`", @tree.branches[edge.key].statement.to_sql
+      assert_equal "`users`.`client_id` = `clients`.`id`", @tree.branches[[@users,@clients]].statement.to_sql
       dot = Sower::Dot::Graph.new(@tree.graph,@tree)
       dot.draw("users_clients.png",:png)
     end

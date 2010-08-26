@@ -37,7 +37,7 @@ module Sower
       def add_branch(tail,head)
         add_leaves(tail,head)
         edge = @graph.add_edge(tail.node, head.node)
-        @branches[edge.key] ||= Sower::Design::Branch.new(edge)
+        @branches[[tail,head]] ||= Sower::Design::Branch.new(edge)
       end
 
       # Add a leaf to the tree
