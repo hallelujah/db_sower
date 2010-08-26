@@ -22,5 +22,10 @@ class TestRelationAttribute < Test::Unit::TestCase
       assert_respond_to @attribute, :like
       assert_instance_of Sower::Relation::Statement, @attribute.like("john%")
     end
+
+    should "respond to attributes" do
+      assert_respond_to @attribute, :attributes
+      assert_equal({@users => [@attribute]}, @attribute.attributes)
+    end
   end
 end

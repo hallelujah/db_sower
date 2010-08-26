@@ -16,9 +16,16 @@ module Sower
       def initialize(table, key)
         @table, @key = table, key
       end
+      
+      include Sower::Inspectable
+      inspectable :table, :key
 
       def ==(other)
         other.table == self.table && other.key == self.key
+      end
+
+      def attributes
+        {self.table => [self]}
       end
 
       def to_sql
