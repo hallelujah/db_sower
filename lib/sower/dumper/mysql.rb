@@ -21,6 +21,13 @@ module Sower
         end
       end
 
+      def super_branches
+        pattern = MagicPattern.new(@node.identity){|tested,(k,v)| tested == k.last}
+        @tree.branches.grep(pattern) do |k,v|
+          v
+        end
+      end
+
       # Fetches all nodes under this one
       def nodes
         @tree.graph.head_nodes_of(@node)
