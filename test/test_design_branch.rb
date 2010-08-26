@@ -3,9 +3,10 @@ class TestDesignBranch < Test::Unit::TestCase
   def setup
     graph = Sower::Graph.new
     assert(@tree = Sower::Design::Tree.new(graph))
-    node = Sower::Node.new(:users)
-    assert(@users = Sower::Design::Leaf.new(node,@tree))
-    assert(@clients = Sower::Design::Leaf.new(node,@tree))
+    user = Sower::Node.new(:users)
+    client = Sower::Node.new(:clients)
+    assert(@users = Sower::Design::Leaf.new(user,@tree))
+    assert(@clients = Sower::Design::Leaf.new(client,@tree))
     edge = Sower::Edge.new(:users, :clients)
     assert(@branch = Sower::Design::Branch.new(edge))
   end
@@ -34,6 +35,15 @@ class TestDesignBranch < Test::Unit::TestCase
       assert_respond_to @branch, :or
       assert_same @branch, @branch.or(@users[:client_id].eq(@clients[:id]))
       assert_not_nil @branch.statement
+    end
+
+    should "respond to attributes_for_leaf" do
+      assert_respond_to @branch, :attributes_for_leaf
+      assert_equal [], @branch.attributes_for_leaf(@clients)
+      assert_equal [], @branch.attributes_for_leaf(@users)
+      @branch.where(@users[:client_id].eq(@clients[:id]))
+      assert_equal [@clients[:id]], @branch.attributes_for_leaf(@clients)
+      assert_equal [@users[:client_id]], @branch.attributes_for_leaf(@users)
     end
   end
 end

@@ -10,6 +10,14 @@ module Sower
       def initialize(edge)
         @edge = edge
       end
+
+      def attributes_for_leaf(leaf)
+        if self.statement
+          self.statement.attributes[leaf.table] 
+        else
+          []
+        end
+      end
     end
   end
 end
