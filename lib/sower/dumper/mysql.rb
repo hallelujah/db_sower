@@ -15,14 +15,14 @@ module Sower
       end
 
       def branches
-        pattern = MagicPattern.new(@node.identity){|tested,(k,v)| tested == k.first}
+        pattern = MagicPattern.new(@node.identity){|tested,(k,v)| tested == k.first.node.identity}
         @tree.branches.grep(pattern) do |k,v|
           v
         end
       end
 
       def super_branches
-        pattern = MagicPattern.new(@node.identity){|tested,(k,v)| tested == k.last}
+        pattern = MagicPattern.new(@node.identity){|tested,(k,v)| tested == k.last.node.identity}
         @tree.branches.grep(pattern) do |k,v|
           v
         end
