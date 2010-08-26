@@ -30,14 +30,15 @@ module Sower
       def attributes
         [@attribute,@value].inject(Hash.new([])) do |memo,c|
           case c 
-          when Sower::Relation::Statement
+          when Sower::Relation::Statement, Sower::Relation::Attribute, Sower::Relation::Value::Base
             memo.merge!(c.attributes){|k,v,n| v | n}
-          when Sower::Relation::Attribute
-            memo[c.table] |= [c]
           end
           memo
         end
       end
+
+      include Sower::Inspectable
+      inspectable :attribute, :value
 
       protected
       # Generate brackets around the value of the yielded block
