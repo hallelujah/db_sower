@@ -39,11 +39,12 @@ require 'active_support/all'
 #puts ActiveSupport::VERSION::STRING
 
 
+module Sower # :nodoc:
+end
+require 'sower/inspectable'
 require 'sower/relation'
 require 'sower/node'
 require 'sower/edge'
 require 'sower/graph'
 require 'sower/design'
 require 'sower/dumper'
-module Sower # :nodoc:
-end
