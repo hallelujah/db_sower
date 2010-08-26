@@ -4,6 +4,7 @@ class TestRelationTable < Test::Unit::TestCase
     users = Sower::Node.new(:users)
     @graph = Sower::Graph.new
     @users = Sower::Relation::Table.new(users)
+    assert @users.to_s
   end
 
   context "a Relation::Table instance" do

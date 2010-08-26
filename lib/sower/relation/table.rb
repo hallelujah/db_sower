@@ -15,6 +15,11 @@ module Sower
         @attributes = Hash.new{ |h,k| h[k.to_sym] = Sower::Relation::Attribute.new(self,k.to_sym)}
       end
 
+      def to_s
+        "#<#{self.class.name} name: #{table_name}>"
+      end
+      alias inspect to_s
+
       def table_name
         @node.identity.to_s
       end
