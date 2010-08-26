@@ -26,6 +26,17 @@ module Sower
         "<id> #{node.identity}||<text> #{statement.to_sql}"
       end
 
+      def has_branches?
+        branches.any?
+      end
+
+      def branches
+        pattern = MagicPattern.new(self) do |tested,(k,v)|
+          k.first == tested
+        end
+        @tree.branches.grep(pattern){|(t,h),b| b }
+      end
+
     end
   end
 end

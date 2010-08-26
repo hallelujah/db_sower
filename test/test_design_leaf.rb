@@ -65,5 +65,18 @@ class TestDesignLeaf < Test::Unit::TestCase
       assert_same @users, @users.or(@users[:client_id].eq(@clients[:id]))
       assert_not_nil @users.statement
     end
+
+    should "respond to has_branches?" do
+      assert_respond_to @users, :has_branches?
+      assert_false @users.has_branches?
+      @users.depends_on(@clients)
+      assert_true @users.has_branches?
+    end
+
+    should "respond to branches" do
+      assert_respond_to @users, :branches
+      @users.depends_on(@clients)
+      assert_equal [@users.tree.branches[[@users,@clients]]], @users.branches
+    end
   end
 end
