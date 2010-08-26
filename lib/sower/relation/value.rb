@@ -3,6 +3,10 @@ module Sower
     module Value
 
       class Key
+
+        include Sower::Inspectable
+        inspectable :key
+
         def initialize(key)
           @key = key
         end
@@ -10,15 +14,26 @@ module Sower
         def bind(val)
           Sower::Relation::Value::IDENTIFIERS[@key].sub('?',val)
         end
+
       end
 
       class Base
         attr_reader :value
 
         class_inheritable_reader :key
+        include Sower::Inspectable
+        inspectable :value
 
         def initialize(value)
           @value = value
+        end
+
+        def attributes
+          if @value.is_a?(Sower::Relation::Attribute)
+            @value.attributes 
+          else
+            {}
+          end
         end
 
         def to_sql

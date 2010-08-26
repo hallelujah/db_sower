@@ -52,4 +52,16 @@ class TestRelationValue < Test::Unit::TestCase
       assert_instance_of Sower::Relation::Value::NotIn, Sower::Relation::Value.not_in([1,2,3,4,5])
     end
   end
+  
+  context "A Relation::Value instance" do
+    should "respond to attributes" do
+      assert_respond_to @eq, :attributes
+      assert_equal( {}, @eq.attributes)
+      node = Sower::Node.new(:node)
+      table = Sower::Relation::Table.new(node)
+      attribute = Sower::Relation::Attribute.new(table,:id)
+      value = Sower::Relation::Value::Eq.new(attribute)
+      assert_equal({table => [attribute]}, value.attributes)
+    end
+  end
 end
