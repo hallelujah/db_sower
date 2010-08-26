@@ -17,10 +17,15 @@ class TestDesignTree < Test::Unit::TestCase
     end
 
     should "add leaf method" do
-      assert ! @tree.respond_to?(:users)
+      assert ! @tree.proxy.respond_to?(:users)
+      assert ! @tree.proxy.respond_to?(:clients)
       @tree.add_leaves(@users,@clients)
-      assert_respond_to @tree, :clients
-      assert_respond_to @tree, :users
+      assert_respond_to @tree.proxy, :clients
+      assert_respond_to @tree.proxy, :users
+    end
+
+    should "respond to proxy" do
+      assert_respond_to @tree, :proxy
     end
   end
 
