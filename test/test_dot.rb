@@ -30,7 +30,6 @@ class TestDot < Test::Unit::TestCase
     end
     assert_nothing_raised do
       @digraph.draw(:png => "normal.png")
-      puts @digraph.draw(:dot => String)
     end
   end
 
