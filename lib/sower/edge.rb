@@ -3,6 +3,8 @@ module Sower
   # In directed graph you must provide a tail and a head
   class Edge
 
+    include Sower::Relation::Stateable
+
     attr_reader :tail, :head, :key
 
     # tail can be whatever argument to pass in Sower::Node.ident

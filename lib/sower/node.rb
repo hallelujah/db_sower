@@ -5,6 +5,9 @@ module Sower
 
     attr_reader :identity
 
+    include Sower::Relation::Stateable
+    delegate :[], :to => :@table
+
     # You can use any argument of Node.ident
     #   Sower::Node.new(String)
     #   Sower::Node.new(Hash)
@@ -12,15 +15,7 @@ module Sower
     #
     def initialize(ident)
       @identity = Node.ident(ident)
-    end
-
-    class EdgePattern #:nodoc:
-      def initialize(n)
-        @node = n
-      end
-      def ===(h)
-        h.has_key?(@node.identity)
-      end
+      @table = Sower::Relation::Table.new(self)
     end
 
     # Retrieve edges of this node in a graph
@@ -29,7 +24,7 @@ module Sower
       a = []
       case direction
       when :tail 
-        pattern = EdgePattern.new(self)
+        pattern = MagicPattern.new(self){|tested,other| other.has_key?(tested.identity) }
         a += (graph.edges.values.grep(pattern){ |hash| hash[self.identity] } || [])
       when :head
         a += graph.edges[self.identity].values
