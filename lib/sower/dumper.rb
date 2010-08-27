@@ -1,1 +1,0 @@
-require 'sower/dumper/mysql'
