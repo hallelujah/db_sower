@@ -32,5 +32,9 @@ class TestRelationStateable < Test::Unit::TestCase
     should "respond to and" do
       assert_respond_to @object, :and
     end
+
+    should "respond to to_sql" do
+      assert_nil @object.to_sql
+    end
   end
 end
