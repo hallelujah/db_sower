@@ -2,10 +2,21 @@ module Sower
   module Relation
     class Statement
       # Initialialize a statement where attribute and values are used between the connector
+
+      attr_reader :attribute, :value
       def initialize(attribute,value)
         @attribute = attribute
         @value = value
       end
+
+      # Loose Equality function
+      def ==(other)
+        other.class == self.class && [@attribute,@value] == [other.attribute,other.value]
+      end
+
+      #def minimal?
+      #  [@attribute,@value].none?{ |a| Sower::Relation::Statement === a}
+      #end
 
       # Create a new AndStatement with self as attribute and statement as value
       # It is a simple chaining
@@ -72,34 +83,36 @@ module Sower
         @statement
       end
 
-      # Generate a new Statement or AndStatement depending on statement.is_nil? and set statement to it.
-      # Return self
-      def where(state)
-        if statement.nil?
-          @statement = Sower::Relation::Statement.new(@statement,state)
-        else
-          @statement = Sower::Relation::AndStatement.new(@statement,state)
-        end
-        self
-      end
-
       # Generate a new AndStatement and set statement to it.
       # Return self
       def and(state)
-        @statement = Sower::Relation::AndStatement.new(@statement,state)
-        self
+        safe_statement(state) do |st|
+          @statement = Sower::Relation::AndStatement.new(@statement,st)
+        end
       end
+      alias_method :where, :and
 
       # Generate a new OrStatement and set statement to it.
       # Return self
       def or(state)
-        @statement = Sower::Relation::OrStatement.new(@statement,state)
-        self
+        safe_statement(state) do |st|
+          @statement = Sower::Relation::OrStatement.new(@statement,st)
+        end
       end
 
       # Just return a nil value when invoking #to_sql for Stateable objects.
       def to_sql
         nil
+      end
+      
+      private
+      def safe_statement(state,&block)
+        if statement.nil?
+          @statement = Sower::Relation::Statement.new(state.attribute, state.value)
+        else
+          @statement = yield(state)
+        end
+        self
       end
     end
 

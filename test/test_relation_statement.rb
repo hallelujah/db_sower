@@ -13,6 +13,10 @@ class TestRelationStatement < Test::Unit::TestCase
       assert_respond_to @statement, :and
     end
 
+    should "be the same" do
+      assert_equal Sower::Relation::Statement.new(@attribute,@value), @statement
+    end
+
     should "respond to or" do
       assert_respond_to @statement, :or
     end
