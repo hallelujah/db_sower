@@ -35,6 +35,10 @@ module Sower
       a
     end
 
+    def to_dot
+      "<id> #{identity}||<text> #{statement.to_sql}"
+    end
+
     class << self
       # Determine identity of a node
       #   identity_or_node can be a Hash, String or Node 

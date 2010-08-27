@@ -32,6 +32,15 @@ class TestNode < Test::Unit::TestCase
       assert_equal [Sower::Edge.new(tail,head), Sower::Edge.new(other_tail,tail)],tail.edges(graph,:both)
     end
 
+    should "respond to []" do
+      assert_respond_to @node, :[]
+      assert_instance_of Sower::Relation::Attribute, @node[:id]
+    end
+
+    should "respond to statement" do
+      assert_respond_to @node, :statement
+    end
+
   end
 
   context "Node class" do
