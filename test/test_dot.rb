@@ -17,17 +17,20 @@ class TestDot < Test::Unit::TestCase
     @graph.add_edge(@head2,@tail)
     @graph.add_edge(@head1,@head2)
     assert_nothing_raised do
-      @digraph.draw("cyclic.png", :png)
+      @digraph.draw(:png => "cyclic.png")
     end
   end
 
 
   should "draw" do
     @graph.add_nodes @head1, @head2, @tail
-    @graph.add_edge(@tail,@head1)
-    @graph.add_edge(@tail,@head2)
+    @graph.draw do
+      tail.depends_on(head1).where(tail[:left].eq(head1[:right]))
+      tail.depends_on(head2).where(tail[:left].eq(head2[:right]))
+    end
     assert_nothing_raised do
-      @digraph.draw("normal.png", :png)
+      @digraph.draw(:png => "normal.png")
+      puts @digraph.draw(:dot => String)
     end
   end
 

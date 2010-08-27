@@ -5,7 +5,6 @@ module Sower
       # Initialize a Dot::Graph to generate a dot file
       def initialize(graph,tree = nil)
         @graph = graph
-        @tree = tree || Sower::Design::Tree.new(@graph)
         @digraph = GraphViz.digraph("test") do |g|
           g[:rotate] = 0
           g[:rankdir] = "LR"
@@ -21,21 +20,20 @@ module Sower
           g.edge[:fontname]="Trebuchet MS"
           g.edge[:fontcolor]='#a95487'
           g.edge[:fontsize]=11
-
         end
       end
 
-      def draw(filename, format = :dot)
+      def draw(options)
         @graph.nodes.each do |ident|
-          label = @tree.leaves[ident].to_dot || ident
+          label = @graph.node(ident).to_dot || ident
           @digraph.add_node(ident, :label => label )
           @graph.tsort_each_child(ident) do |child|
             edge = @graph.edges[ident][child]
-            label = @tree.branches[edge.key].statement.to_sql if @tree.branches[edge.key]
-            @digraph.add_edge(ident,child, :label => label)
+            elabel = edge.statement.to_sql
+            @digraph.add_edge(ident,child, :label => elabel, :headport => 'id', :tailport => 'id')
           end
         end
-        @digraph.output(format => filename)
+        @digraph.output(options)
       end
     end
   end
