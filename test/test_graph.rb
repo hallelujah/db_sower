@@ -49,8 +49,8 @@ class TestGraph < Test::Unit::TestCase
         in_loop = true
         i = 0
         @graph.tsort_each_child(ident) do |child|
-         assert_same @graph.edges[ident].keys[i], child
-         i += 1
+          assert_same @graph.edges[ident].keys[i], child
+          i += 1
         end
       end
       assert in_loop
@@ -133,8 +133,8 @@ class TestGraph < Test::Unit::TestCase
     should "iterate through nodes when sent #each_node" do
       i = 0
       @graph.each_node do |n|g
-        assert_same n, @graph.nodes[i]
-        i += 1
+      assert_same n, @graph.nodes[i]
+      i += 1
       end
     end
 
@@ -144,6 +144,21 @@ class TestGraph < Test::Unit::TestCase
       assert_operator 0, :<, @graph.edges.size
       @graph.each_edge do |e|
         assert_instance_of Sower::Edge, e
+      end
+    end
+
+    should "respond to draw" do
+      assert_respond_to @graph, :draw
+      assert_raise NameError do 
+        @graph.draw do
+          tail.depends_on(head).where(tail[:id].eq(head[:tail_id]))
+        end
+      end
+      @graph.add_nodes(@tail,@head)
+      assert_nothing_raised do 
+        @graph.draw do
+          tail.where(tail[:status].eq(1)).or(tail[:status].ne(3)).depends_on(head).where(tail[:id].eq(head[:tail_id]))
+        end
       end
     end
   end
